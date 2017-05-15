@@ -11,7 +11,7 @@
 namespace benchmark {
 namespace internal {
 
-typedef void(AbortHandlerT)();
+typedef void(BENCHMARK_CDECL AbortHandlerT)();
 
 inline AbortHandlerT*& GetAbortHandler() {
   static AbortHandlerT* handler = &std::abort;

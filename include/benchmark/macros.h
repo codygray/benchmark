@@ -31,11 +31,13 @@
 #if defined(__GNUC__)
 #define BENCHMARK_UNUSED __attribute__((unused))
 #define BENCHMARK_ALWAYS_INLINE __attribute__((always_inline))
+#define BENCHMARK_NOINLINE __attribute__((noinline))
 #define BENCHMARK_NOEXCEPT noexcept
 #define BENCHMARK_NOEXCEPT_OP(x) noexcept(x)
 #elif defined(_MSC_VER) && !defined(__clang__)
 #define BENCHMARK_UNUSED
 #define BENCHMARK_ALWAYS_INLINE __forceinline
+#define BENCHMARK_NOINLINE __declspec(noinline)
 #if _MSC_VER >= 1900
 #define BENCHMARK_NOEXCEPT noexcept
 #define BENCHMARK_NOEXCEPT_OP(x) noexcept(x)
@@ -47,6 +49,7 @@
 #else
 #define BENCHMARK_UNUSED
 #define BENCHMARK_ALWAYS_INLINE
+#define BENCHMARK_NOINLINE
 #define BENCHMARK_NOEXCEPT
 #define BENCHMARK_NOEXCEPT_OP(x)
 #endif
@@ -61,6 +64,18 @@
 
 #if defined(__GNUC__) && !defined(__clang__)
 #define BENCHMARK_GCC_VERSION (__GNUC__ * 100 + __GNUC_MINOR__)
+#endif
+
+#if defined (_WIN32)
+#if defined (__GNUC__)
+#define BENCHMARK_CDECL __attribute__(__cdecl__)
+#elif defined(_MSC_VER)
+#define BENCHMARK_CDECL __cdecl
+#else
+#define BENCHMARK_CDECL
+#endif
+#else
+#define BENCHMARK_CDECL
 #endif
 
 #endif  // BENCHMARK_MACROS_H_

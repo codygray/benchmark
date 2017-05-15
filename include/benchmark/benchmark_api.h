@@ -905,11 +905,11 @@ class Fixture : public internal::Benchmark {
   void BaseClass##_##Method##_Benchmark::BenchmarkCase
 
 // Helper macro to create a main routine in a test that runs the benchmarks
-#define BENCHMARK_MAIN()                   \
-  int main(int argc, char** argv) {        \
-    ::benchmark::Initialize(&argc, argv);  \
+#define BENCHMARK_MAIN()                                                \
+  int BENCHMARK_CDECL main(int argc, char** argv) {                     \
+    ::benchmark::Initialize(&argc, argv);                               \
     if (::benchmark::ReportUnrecognizedArguments(argc, argv)) return 1; \
-    ::benchmark::RunSpecifiedBenchmarks(); \
+    ::benchmark::RunSpecifiedBenchmarks();                              \
   }
 
 #endif  // BENCHMARK_BENCHMARK_API_H_
